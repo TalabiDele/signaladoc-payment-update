@@ -173,6 +173,7 @@ export const AuthProvider = ({ children }) => {
     password,
     userId,
     emailCode,
+    username,
   }) => {
     setLoading(true);
 
@@ -187,6 +188,7 @@ export const AuthProvider = ({ children }) => {
         surname: surname,
         password,
         code: emailCode,
+        username: username,
       }),
     });
 

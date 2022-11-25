@@ -7,11 +7,20 @@ const VSMRegister = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const { register, userId, emailCode, setError, setMessage, loading } =
-    useContext(AuthContext);
+  const {
+    register,
+    userId,
+    emailCode,
+    setError,
+    setMessage,
+    loading,
+    username,
+  } = useContext(AuthContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
+
+    console.log(username);
 
     if (password !== confirmPassword) {
       setMessage("Passwords do no match!");
@@ -21,13 +30,13 @@ const VSMRegister = () => {
         setError(false);
       }, 3000);
     } else {
-      register({ password, surname, firstName, userId, emailCode });
+      register({ password, surname, firstName, userId, emailCode, username });
     }
   };
 
   return (
     <div className=" w-full">
-      <div className=" w-full">
+      <div className=" w-full ss:mt-[5rem] xs:mt-[5rem]">
         <form action=" " className="grid mt-10" onSubmit={handleRegister}>
           <p className=" mb-5 text-[28px] font-bold">Register</p>
           {/* <label

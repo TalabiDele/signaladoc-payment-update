@@ -91,7 +91,7 @@ const VSMEmail = () => {
               id="toast-success"
               className={` ${
                 !approved ? "hidden" : ""
-              } flex items-center p-4 my-4 w-full max-w-xl text-gray-500 bg-white rounded-lg shadow`}
+              } flex items-center p-4 my-4 w-full max-w-xl text-gray-500 bg-white rounded-lg shadow ss:mt-[5rem] xs:mt-[5rem]`}
               role="alert"
             >
               <div className="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
@@ -138,7 +138,7 @@ const VSMEmail = () => {
           {error && (
             <div
               id="toast-danger"
-              className="flex items-center p-4 my-4 w-full max-w-xl text-gray-500 bg-white rounded-lg shadow"
+              className="flex items-center p-4 my-4 w-full max-w-xl text-gray-500 bg-white rounded-lg shadow ss:mt-[5rem] xs:mt-[5rem]"
               role="alert"
             >
               <div className="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
@@ -185,7 +185,7 @@ const VSMEmail = () => {
           {isEmail && (
             <form
               action=""
-              className=" grid mt-10"
+              className=" grid mt-10 ss:mt-[5rem] xs:mt-[5rem]"
               onSubmit={handleEmailVerify}
             >
               <p className=" text-[20px] mb-5 ss:text-lg">

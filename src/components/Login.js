@@ -31,7 +31,7 @@ const Login = () => {
 
   return (
     <div className=" w-full">
-      <div className=" w-full">
+      <div className=" w-full relative">
         <form action=" " className="grid mt-5" onSubmit={handleLogin}>
           <p className=" mb-5 text-[20px] font-bold">Login</p>
 

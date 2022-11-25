@@ -37,7 +37,11 @@ const VsmLogin = () => {
   return (
     <div className=" w-full">
       <div className=" w-full">
-        <form action=" " className="grid mt-5" onSubmit={handleLogin}>
+        <form
+          action=" "
+          className="grid mt-5 ss:mt-[5rem] xs:mt-[5rem]"
+          onSubmit={handleLogin}
+        >
           <p className=" mb-5 text-[20px] font-bold">Login</p>
           {/* <button
             type="button"
