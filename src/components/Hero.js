@@ -22,7 +22,7 @@ const Hero = () => {
       </BgHero> */}
       <VsmBgHero>
         <div className=" bg-primary w-full h-[100vh] mix-blend-multiply relative"></div>
-        <div className=" text-white absolute top-[20rem] text-center w-2/6 mx-auto right-0 left-0">
+        <div className=" text-white absolute top-[20rem] text-center w-2/6 mx-auto right-0 left-0 ss:w-[90%] xs:w-[90%] sm:w-[80%] lg:w-[60%] xl:w-[60%]">
           <h1 className=" text-5xl font-bold mb-4 ss:text-4xl">
             Monitor Your Vital Signs Just By Looking At Your Phone!
           </h1>
