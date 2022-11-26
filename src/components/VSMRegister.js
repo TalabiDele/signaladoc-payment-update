@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { GrFormView, GrFormViewHide } from "react-icons/gr";
 import AuthContext from "../Context/AuthContext";
 
 const VSMRegister = () => {
@@ -6,6 +7,8 @@ const VSMRegister = () => {
   const [surname, setSurname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [show, setShow] = useState(false);
+  const [passShow, setPassShow] = useState(false);
 
   const {
     register,
@@ -99,30 +102,64 @@ const VSMRegister = () => {
           >
             Password
           </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="**********"
-            className=" border-none bg-input-blue rounded-md py-5 w-3/4 mb-10 lg:w-full sm:w-full xs:w-full ss:w-full "
-          />
+          <div className=" relative">
+            <div className="absolute right-5 top-5 text-3xl">
+              {passShow ? (
+                <GrFormViewHide
+                  onClick={() => setPassShow(false)}
+                  className="text-primary"
+                  color="#1665D2"
+                />
+              ) : (
+                <GrFormView
+                  onClick={() => setPassShow(true)}
+                  className="text-primary"
+                  color="#1665D2"
+                />
+              )}
+            </div>
+            <input
+              type={passShow ? "text" : "password"}
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder={`*********`}
+              className=" border-none bg-input-blue rounded-md py-5 px-5 w-full mb-2 lg:w-full sm:w-full xs:w-full ss:w-full "
+            />
+          </div>
           <label
             htmlFor="confirmPassword"
             className=" text-grey-text text-[12px] mb-2"
           >
             Confirm Password
           </label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="**********"
-            className=" border-none bg-input-blue rounded-md py-5 w-3/4 mb-10 lg:w-full sm:w-full xs:w-full ss:w-full "
-          />
+          <div className=" relative">
+            <div className="absolute right-5 top-5 text-3xl">
+              {show ? (
+                <GrFormViewHide
+                  onClick={() => setShow(false)}
+                  className="text-primary"
+                  color="#1665D2"
+                />
+              ) : (
+                <GrFormView
+                  onClick={() => setShow(true)}
+                  className="text-primary"
+                  color="#1665D2"
+                />
+              )}
+            </div>
+            <input
+              type={show ? "text" : "password"}
+              id="password"
+              name="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder={`*********`}
+              className=" border-none bg-input-blue rounded-md py-5 px-5 w-full mb-2 lg:w-full sm:w-full xs:w-full ss:w-full "
+            />
+          </div>
           {loading ? (
             <button
               disabled
