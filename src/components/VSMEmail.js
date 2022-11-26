@@ -42,10 +42,34 @@ const VSMEmail = () => {
     setIsLogin,
     setIsEmail,
     isLogin,
+    setType,
+    type,
   } = useContext(AuthContext);
+
+  const handleChange = (e) => {
+    setUsername(e.target.value);
+
+    if (username.includes("@")) {
+      setType("email");
+    }
+
+    if (username.includes("+234")) {
+      setType("phone");
+    }
+  };
 
   const handleEmailVerify = (e) => {
     e.preventDefault();
+
+    if (username.includes("@")) {
+      setType("email");
+    }
+
+    if (username.includes("+234")) {
+      setType("phone");
+    }
+
+    console.log(type);
 
     if (username === "") {
       setError(true);
@@ -58,7 +82,7 @@ const VSMEmail = () => {
       }, 3000);
     }
 
-    validateEmail({ username });
+    validateEmail({ username, type });
   };
 
   const handleLogin = () => {
@@ -202,8 +226,8 @@ const VSMEmail = () => {
                 id="username"
                 name="username"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="johndoe@email.com"
+                onChange={(e) => handleChange(e)}
+                placeholder="johndoe@email.com or +2348012345678"
                 className=" border-none bg-input-blue rounded-md py-5 w-full mb-2 lg:w-full sm:w-full xs:w-full ss:w-full"
               />
               <p className="mb-10 text-right">

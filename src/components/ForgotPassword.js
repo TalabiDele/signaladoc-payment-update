@@ -29,7 +29,7 @@ const ForgotPassword = () => {
 
   return (
     <div>
-      <form action="" className=" grid mt-10">
+      <form action="" className=" grid mt-10 ss:mt-[5rem] xs:mt-[5rem]">
         <h1 className="text-3xl font-bold mb-5">Forgot Password</h1>
         <p className=" text-[20px] mb-5 ss:text-lg">
           Enter Your Email Address or Phone Number

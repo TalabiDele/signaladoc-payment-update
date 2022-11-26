@@ -25,6 +25,7 @@ const CodeReset = () => {
     setIsReset,
     resendCode,
     userId,
+    setIsForgot,
   } = useContext(AuthContext);
 
   const verifyCode = (e) => {
@@ -70,7 +71,9 @@ const CodeReset = () => {
 
   const closeModal = () => {
     setIsCode(false);
-    setIsEmail(true);
+    setIsForgot(true);
+    setIsEmail(false);
+    setIsCodeReset(false);
     setIsDetails(false);
   };
 

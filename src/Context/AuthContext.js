@@ -34,16 +34,21 @@ export const AuthProvider = ({ children }) => {
   const [isPaid, setIsPaid] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [selected, setSelected] = useState();
+  const [type, setType] = useState();
+  const [isType, setIsType] = useState("");
+  const [regType, setRegType] = useState();
 
-  const validateEmail = async ({ username }) => {
+  const validateEmail = async ({ username, type }) => {
     setLoading(true);
+
+    console.log(type);
 
     const res = await fetch(`${API_URL}/user/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, type: "email" }),
+      body: JSON.stringify({ username, type }),
     });
 
     const data = await res.json();
@@ -67,6 +72,8 @@ export const AuthProvider = ({ children }) => {
       } else {
         setApproved(true);
         setMessage(`${data.message}`);
+        setIsType(data.data.type_string);
+        setRegType(data.data.type);
         setUserExists(false);
         setTimeout(() => {
           setApproved(false);
@@ -174,10 +181,14 @@ export const AuthProvider = ({ children }) => {
     userId,
     emailCode,
     username,
+    isType,
+    regType,
   }) => {
     setLoading(true);
 
-    const res = await fetch(`${API_URL}/user/auth/register`, {
+    console.log(username);
+
+    const res = await fetch(`${API_URL}/user/auth/register/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -188,17 +199,21 @@ export const AuthProvider = ({ children }) => {
         surname: surname,
         password,
         code: emailCode,
-        username: username,
+        username,
+        type: isType,
+        registration_type: regType,
       }),
     });
 
     const data = await res.json();
 
+    console.log(data);
+
     if (res.ok) {
       // setUser(data.user);
       setApproved(true);
       setMessage("Account created successfully!");
-      setIsPlan(true);
+      setIsLogin(true);
       setIsDetails(false);
       setUser(data.user);
       setStepTwo(true);
@@ -479,7 +494,7 @@ export const AuthProvider = ({ children }) => {
   const resetVsmPassword = async ({ userId, password }) => {
     setLoading(true);
 
-    const res = await fetch(`${API_URL}/user/forgot-password/reset`, {
+    const res = await fetch(`${AUTH_API}/forgot-password/reset`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -495,7 +510,7 @@ export const AuthProvider = ({ children }) => {
 
       setTimeout(() => {
         setApproved(false);
-        setUserExists(true);
+        setIsLogin(true);
         setIsCodeReset(false);
         setIsReset(false);
       }, 4000);
@@ -769,6 +784,12 @@ export const AuthProvider = ({ children }) => {
         selected,
         setSelected,
         googleLogin,
+        type,
+        setType,
+        isType,
+        setIsType,
+        regType,
+        setRegType,
       }}
     >
       {children}

@@ -57,11 +57,11 @@ const VSMPlan = () => {
 
   return (
     <div>
-      <div className=" mt-5 w-[90%] mx-auto">
+      <div className=" mt-5 w-[90%] mx-auto ss:my-[5rem] xs:my-[5rem]">
         <p className=" text-center text-2xl mb-5">
           {/* Enjoy Amazing discount on every consultation */}
         </p>
-        <div className=" flex gap-10">
+        <div className=" flex gap-10 xs:flex-col ss:flex-col">
           {plans &&
             plans.map((e) => (
               <div

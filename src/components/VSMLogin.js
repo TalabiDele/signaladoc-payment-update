@@ -19,6 +19,8 @@ const VsmLogin = () => {
     setIsLogin,
     setIsEmail,
     vsmLogin,
+    setIsForgot,
+    setUserExists,
   } = useContext(AuthContext);
 
   const handleLogin = (e) => {
@@ -27,6 +29,11 @@ const VsmLogin = () => {
       username,
       password,
     });
+  };
+
+  const handleForgot = () => {
+    setIsForgot(true);
+    setIsLogin(false);
   };
 
   const handleRegister = () => {
@@ -79,6 +86,7 @@ const VsmLogin = () => {
               onError={() => {
                 console.log("Login Failed");
               }}
+              useOneTap
             />
           </GoogleOAuthProvider>
 
@@ -117,15 +125,25 @@ const VsmLogin = () => {
             placeholder="**********"
             className=" border-none bg-input-blue rounded-md py-5 px-5 w-full mb-2 lg:w-full sm:w-full xs:w-full ss:w-full "
           />
-          <p className="mb-10 text-right">
-            Don't have an account?{" "}
-            <span
-              className=" font-bold text-primary hover:text-grad-light cursor-pointer transition-all duration-300 ease-in-out"
-              onClick={handleRegister}
+
+          <div className=" flex justify-between">
+            <p
+              className=" cursor-pointer font-bold mb-4 hover:text-primary"
+              onClick={handleForgot}
             >
-              Sign up
-            </span>{" "}
-          </p>
+              Forgot Password?
+            </p>
+
+            <p className="mb-10 text-right">
+              Don't have an account?{" "}
+              <span
+                className=" font-bold text-primary hover:text-grad-light cursor-pointer transition-all duration-300 ease-in-out"
+                onClick={handleRegister}
+              >
+                Sign up
+              </span>{" "}
+            </p>
+          </div>
           {loading ? (
             <button
               disabled

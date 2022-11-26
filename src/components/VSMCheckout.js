@@ -43,7 +43,7 @@ const VSMCheckout = () => {
   return (
     <div>
       {plans && (
-        <div className=" bg-white mt-10 shadow-lg w-[30rem] p-10 rounded-md text-xl xs:w-[25rem] ss:w-[20rem]">
+        <div className=" bg-white mt-10 shadow-lg w-[30rem] p-10 rounded-md text-xl xs:w-[25rem] ss:w-[20rem] xs:mt-[5rem] ss:mt-[5rem]">
           <p className=" text-2xl mb-5">Order Summary</p>
           <p className=" mb-3">
             Date: {moment(Date.now()).format("MMMM Do YYYY")}

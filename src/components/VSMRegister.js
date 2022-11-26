@@ -15,10 +15,13 @@ const VSMRegister = () => {
     setMessage,
     loading,
     username,
+    isType,
+    regType,
   } = useContext(AuthContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
+    console.log(isType);
 
     console.log(username);
 
@@ -30,7 +33,16 @@ const VSMRegister = () => {
         setError(false);
       }, 3000);
     } else {
-      register({ password, surname, firstName, userId, emailCode, username });
+      register({
+        password,
+        surname,
+        firstName,
+        userId,
+        emailCode,
+        username,
+        isType,
+        regType,
+      });
     }
   };
 
