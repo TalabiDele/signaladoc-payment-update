@@ -2,12 +2,15 @@ import React, { useState, useContext } from "react";
 import AuthContext from "../Context/AuthContext";
 import { GoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GrFormViewHide, GrFormView } from "react-icons/gr";
+
 // import { GoogleLogin } from "react-google-login";
 // import GoogleLogin from "react-google-login";
 
 const VsmLogin = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [show, setShow] = useState(false);
 
   const {
     login,
@@ -116,15 +119,32 @@ const VsmLogin = () => {
           >
             Password
           </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="**********"
-            className=" border-none bg-input-blue rounded-md py-5 px-5 w-full mb-2 lg:w-full sm:w-full xs:w-full ss:w-full "
-          />
+          <div className=" relative">
+            <div className="absolute right-5 top-5 text-3xl">
+              {show ? (
+                <GrFormViewHide
+                  onClick={() => setShow(false)}
+                  className="text-primary"
+                  color="#1665D2"
+                />
+              ) : (
+                <GrFormView
+                  onClick={() => setShow(true)}
+                  className="text-primary"
+                  color="#1665D2"
+                />
+              )}
+            </div>
+            <input
+              type={show ? "text" : "password"}
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder={`*********`}
+              className=" border-none bg-input-blue rounded-md py-5 px-5 w-full mb-2 lg:w-full sm:w-full xs:w-full ss:w-full "
+            />
+          </div>
 
           <div className=" flex justify-between">
             <p
