@@ -14,6 +14,8 @@ import VsmReset from "./VsmReset";
 import Login from "./Login";
 import VSMLogin from "./VSMLogin";
 import VsmLogin from "./VSMLogin";
+import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 const VSMEmail = () => {
   const { showBg } = useContext(AuthContext);
@@ -44,6 +46,7 @@ const VSMEmail = () => {
     isLogin,
     setType,
     type,
+    googleLogin,
   } = useContext(AuthContext);
 
   const handleChange = (e) => {
@@ -88,6 +91,22 @@ const VSMEmail = () => {
   const handleLogin = () => {
     setIsLogin(true);
     setIsEmail(false);
+  };
+
+  const handleGoogleSignin = (
+    tokenId,
+    initial,
+    username,
+    lastname,
+    picture
+  ) => {
+    googleLogin({
+      token: tokenId,
+      firstname: initial,
+      surname: lastname,
+      photo: picture,
+      email: username,
+    });
   };
 
   return (
@@ -212,9 +231,42 @@ const VSMEmail = () => {
               className=" grid mt-10 ss:mt-[5rem] xs:mt-[5rem]"
               onSubmit={handleEmailVerify}
             >
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  console.log(credentialResponse);
+                  const decoded = jwt_decode(credentialResponse.credential);
+
+                  console.log(decoded);
+                  const tokenId = credentialResponse.credential;
+                  const initial = decoded.given_name;
+                  const username = decoded.email;
+                  const lastname = decoded.family_name;
+                  const picture = decoded.picture;
+
+                  handleGoogleSignin(
+                    tokenId,
+                    initial,
+                    username,
+                    lastname,
+                    picture
+                  );
+                }}
+                onError={() => {
+                  console.log("Login Failed");
+                }}
+                useOneTap
+              />
+
+              <div className=" flex items-center mt-5">
+                <div className=" h-[1px] w-[50%] bg-input-blue"></div>
+                <p className="font-bold text-[20px] mx-4">or</p>
+                <div className=" h-[1px] w-[50%] bg-input-blue"></div>
+              </div>
+
               <p className=" text-[20px] mb-5 ss:text-lg">
                 Enter Your Email Address or Phone Number To Get Started!
               </p>
+
               <label
                 htmlFor="username"
                 className=" text-grey-text text-[12px] mb-2"

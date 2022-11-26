@@ -37,6 +37,10 @@ export const AuthProvider = ({ children }) => {
   const [type, setType] = useState();
   const [isType, setIsType] = useState("");
   const [regType, setRegType] = useState();
+  const [firstname, setFirstname] = useState("");
+  const [surname, setSurname] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [email, setEmail] = useState("");
 
   const validateEmail = async ({ username, type }) => {
     setLoading(true);
@@ -211,13 +215,14 @@ export const AuthProvider = ({ children }) => {
 
     if (res.ok) {
       // setUser(data.user);
+      setToken(data.access_token);
       setApproved(true);
       setMessage("Account created successfully!");
       setIsLogin(true);
+      // setIsPlan(true);
       setIsDetails(false);
       setUser(data.user);
       setStepTwo(true);
-      setToken(data.access_token);
       setTimeout(() => {
         setApproved(false);
         setMessage("");
@@ -692,23 +697,39 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
-  const googleLogin = async ({ token, firstname, surname, photo }) => {
+  const googleLogin = async ({ token, firstname, surname, photo, email }) => {
     setLoading(true);
 
     const res = await fetch(`${AUTH_API}/social/google`, {
       method: "POST",
-      "Content-Type": "application/json",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         id_token: token,
         first_name: firstname,
         surname,
         photo,
+        email,
+        id: Math.floor(Math.random() * (999 - 100 + 1) + 100),
       }),
     });
 
-    const data = res.json();
+    const data = await res.json();
 
-    console.log(data);
+    console.log(data.access_token);
+
+    if (res.ok) {
+      setToken(data.access_token);
+      setIsEmail(false);
+      setIsLogin(false);
+      setIsPlan(true);
+    }
+
+    console.log(token);
+
+    setLoading(false);
   };
 
   return (
@@ -790,6 +811,15 @@ export const AuthProvider = ({ children }) => {
         setIsType,
         regType,
         setRegType,
+        email,
+        setEmail,
+        photo,
+        setPhoto,
+        surname,
+        setSurname,
+        firstname,
+        setFirstname,
+        setToken,
       }}
     >
       {children}

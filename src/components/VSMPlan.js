@@ -14,9 +14,15 @@ const VSMPlan = () => {
     setDiscountId,
     selected,
     setSelected,
+    googleLogin,
+    firstname,
+    surname,
+    photo,
+    email,
   } = useContext(AuthContext);
 
   useEffect(() => {
+    console.log(token);
     subscriptions();
   }, []);
 
@@ -28,6 +34,10 @@ const VSMPlan = () => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization",
       },
     });
 
@@ -53,6 +63,10 @@ const VSMPlan = () => {
     setIsPlan(false);
     setIsCheckout(true);
     setStepThree(true);
+  };
+
+  const handleGoogleSignin = () => {
+    googleLogin({ token, firstname, surname, photo, email });
   };
 
   return (

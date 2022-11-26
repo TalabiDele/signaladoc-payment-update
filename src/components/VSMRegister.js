@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import { GrFormView, GrFormViewHide } from "react-icons/gr";
 import AuthContext from "../Context/AuthContext";
+import { GoogleReg } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 const VSMRegister = () => {
   const [firstName, setFirstName] = useState("");
@@ -20,6 +22,7 @@ const VSMRegister = () => {
     username,
     isType,
     regType,
+    googleLogin,
   } = useContext(AuthContext);
 
   const handleRegister = (e) => {
