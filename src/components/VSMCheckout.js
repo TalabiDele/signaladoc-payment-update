@@ -41,9 +41,9 @@ const VSMCheckout = () => {
   const handleFlutterPayment = useFlutterwave(config);
 
   return (
-    <div>
+    <div className=" w-[60%] mx-auto">
       {plans && (
-        <div className=" bg-white mt-10 shadow-lg w-[30rem] p-10 rounded-md text-xl xs:w-[25rem] ss:w-[20rem] xs:mt-[5rem] ss:mt-[5rem]">
+        <div className=" bg-white mt-10 shadow-lg w-[30rem] p-10 rounded-md text-xl xs:w-[25rem] ss:w-[20rem] xs:mt-[5rem] ss:mt-[5rem] mx-auto">
           <p className=" text-2xl mb-5">Order Summary</p>
           <p className=" mb-3">
             Date: {moment(Date.now()).format("MMMM Do YYYY")}
@@ -61,15 +61,11 @@ const VSMCheckout = () => {
             onClick={() => {
               handleFlutterPayment({
                 callback: (response) => {
-                  console.log(response.tx_ref);
                   setRef(response.tx_ref);
                   if (response.status === "successful") {
-                    console.log(discountId);
-                    console.log(ref);
                     setIsPaid(true);
                     setIsSuccess(true);
                     setIsCheckout(false);
-                    console.log(isPaid);
                   } else {
                     setIsPaid(false);
                   }

@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import AuthContext from "../Context/AuthContext";
+import { Link } from "react-router-dom";
 
-const Login = () => {
+const UserLogin = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
@@ -30,8 +31,8 @@ const Login = () => {
   };
 
   return (
-    <div className=" w-full">
-      <div className=" w-full relative">
+    <div className=" w-2/4 h-[100vh] overflow-y-scroll xs:w-full ss:w-full ss:h-[90vh] xs:h-[90vh] sm:h-[90vh]">
+      <div className=" relative top-[3rem] left-20 right-0 w-[80%] sm:left-10 xs:w-[80%] xs:left-0 xs:top-[2rem] xs:mx-auto ss:w-[80%] ss:left-0 ss:mx-auto ss:top-[3rem] sm:top-[1rem]">
         <form action=" " className="grid mt-5" onSubmit={handleLogin}>
           <p className=" mb-5 text-[20px] font-bold">Login</p>
 
@@ -97,12 +98,14 @@ const Login = () => {
 
           <p className="mb-10 text-right">
             Don't have an account?{" "}
-            <span
-              className=" font-bold text-primary hover:text-grad-light cursor-pointer transition-all duration-300 ease-in-out"
-              onClick={handleRegister}
-            >
-              Sign up
-            </span>{" "}
+            <Link to={"/activate/vsm/register"}>
+              <span
+                className=" font-bold text-primary hover:text-grad-light cursor-pointer transition-all duration-300 ease-in-out"
+                // onClick={handleRegister}
+              >
+                Sign up
+              </span>{" "}
+            </Link>
           </p>
 
           {loading ? (
@@ -140,4 +143,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default UserLogin;

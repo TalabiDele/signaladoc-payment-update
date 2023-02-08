@@ -3,6 +3,7 @@ import { GrFormView, GrFormViewHide } from "react-icons/gr";
 import AuthContext from "../Context/AuthContext";
 import { GoogleReg } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
+import { Navigate } from "react-router-dom";
 
 const VSMRegister = () => {
   const [firstName, setFirstName] = useState("");
@@ -22,14 +23,11 @@ const VSMRegister = () => {
     username,
     isType,
     regType,
-    googleLogin,
+    user,
   } = useContext(AuthContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log(isType);
-
-    console.log(username);
 
     if (password !== confirmPassword) {
       setMessage("Passwords do no match!");
@@ -54,6 +52,7 @@ const VSMRegister = () => {
 
   return (
     <div className=" w-full">
+      {user && <Navigate to="/activate/vsm/plans" replace={true} />}
       <div className=" w-full ss:mt-[5rem] xs:mt-[5rem]">
         <form action=" " className="grid mt-10" onSubmit={handleRegister}>
           <p className=" mb-5 text-[28px] font-bold">Register</p>

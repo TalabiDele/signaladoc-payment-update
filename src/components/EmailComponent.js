@@ -11,7 +11,8 @@ import Success from "./Success";
 import ForgotPassword from "./ForgotPassword";
 import Reset from "./Reset";
 import CodeReset from "./CodeReset";
-import Login from "./Login";
+import UserLogin from "./UserLogin";
+import { Link } from "react-router-dom";
 
 const EmailComponent = () => {
   const { showBg, username, setUsername } = useContext(AuthContext);
@@ -207,12 +208,14 @@ const EmailComponent = () => {
               />
               <p className="mb-10 text-right">
                 Already have an account?{" "}
-                <span
-                  className=" font-bold text-primary hover:text-grad-light cursor-pointer transition-all duration-300 ease-in-out"
-                  onClick={handleLogin}
-                >
-                  Login
-                </span>{" "}
+                <Link to="/vsm/login">
+                  <span
+                    className=" font-bold text-primary hover:text-grad-light cursor-pointer transition-all duration-300 ease-in-out"
+                    // onClick={handleLogin}
+                  >
+                    Login
+                  </span>{" "}
+                </Link>
               </p>
               {loading ? (
                 <button
@@ -264,7 +267,7 @@ const EmailComponent = () => {
 
           {isReset && <Reset />}
 
-          {isLogin && <Login />}
+          {isLogin && <UserLogin />}
         </div>
       </div>
     </div>

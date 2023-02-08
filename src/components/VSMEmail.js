@@ -11,11 +11,12 @@ import VSMSuccess from "./VSMSuccess";
 import ForgotVsmPassword from "./ForgotPassword";
 import CodeReset from "./CodeReset";
 import VsmReset from "./VsmReset";
-import Login from "./Login";
+import Login from "./UserLogin";
 import VSMLogin from "./VSMLogin";
 import VsmLogin from "./VSMLogin";
 import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
+import { Link } from "react-router-dom";
 
 const VSMEmail = () => {
   const { showBg } = useContext(AuthContext);
@@ -71,8 +72,6 @@ const VSMEmail = () => {
     if (username.includes("+234")) {
       setType("phone");
     }
-
-    console.log(type);
 
     if (username === "") {
       setError(true);
@@ -233,10 +232,7 @@ const VSMEmail = () => {
             >
               <GoogleLogin
                 onSuccess={(credentialResponse) => {
-                  console.log(credentialResponse);
                   const decoded = jwt_decode(credentialResponse.credential);
-
-                  console.log(decoded);
                   const tokenId = credentialResponse.credential;
                   const initial = decoded.given_name;
                   const username = decoded.email;
@@ -284,12 +280,14 @@ const VSMEmail = () => {
               />
               <p className="mb-10 text-right">
                 Already have an account?{" "}
-                <span
-                  className=" font-bold text-primary hover:text-grad-light cursor-pointer transition-all duration-300 ease-in-out"
-                  onClick={handleLogin}
-                >
-                  Login
-                </span>{" "}
+                <Link to="/activate/vsm/login">
+                  <span
+                    className=" font-bold text-primary hover:text-grad-light cursor-pointer transition-all duration-300 ease-in-out"
+                    // onClick={handleLogin}
+                  >
+                    Login
+                  </span>{" "}
+                </Link>
               </p>
               {loading ? (
                 <button

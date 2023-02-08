@@ -1,6 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { json } from "react-router-dom";
 import { API_URL, AUTH_API, TELEMEDICINE_URL } from "../Config";
+import jwt from "jwt-decode";
+import Cookies from "universal-cookie";
+import { Navigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -22,7 +25,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [plans, setPlans] = useState();
   const [isCheckout, setIsCheckout] = useState(false);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [discountId, setDiscountId] = useState();
   const [showBg, setShowBg] = useState(true);
   const [ref, setRef] = useState();
@@ -42,10 +45,16 @@ export const AuthProvider = ({ children }) => {
   const [photo, setPhoto] = useState("");
   const [email, setEmail] = useState("");
 
+  const cookies = new Cookies();
+
+  useEffect(() => {
+    checkUserLoggedIn();
+  }, [user]);
+
+  // const navigate = Navigate();
+
   const validateEmail = async ({ username, type }) => {
     setLoading(true);
-
-    console.log(type);
 
     const res = await fetch(`${API_URL}/user/auth/register`, {
       method: "POST",
@@ -57,13 +66,12 @@ export const AuthProvider = ({ children }) => {
 
     const data = await res.json();
 
-    console.log(data);
-
     if (res.ok) {
       if (data.exists) {
         setApproved(true);
         setUserExists(true);
         setIsEmail(false);
+        // navigate("/login");
 
         setMessage(`${data.message}`);
 
@@ -132,8 +140,6 @@ export const AuthProvider = ({ children }) => {
 
     const data = await res.json();
 
-    console.log(data);
-
     if (res.ok) {
       if (data.exists) {
         setError(true);
@@ -190,8 +196,6 @@ export const AuthProvider = ({ children }) => {
   }) => {
     setLoading(true);
 
-    console.log(username);
-
     const res = await fetch(`${API_URL}/user/auth/register/create`, {
       method: "POST",
       headers: {
@@ -210,8 +214,6 @@ export const AuthProvider = ({ children }) => {
     });
 
     const data = await res.json();
-
-    console.log(data);
 
     if (res.ok) {
       // setUser(data.user);
@@ -591,7 +593,7 @@ export const AuthProvider = ({ children }) => {
   const login = async ({ username, password }) => {
     setLoading(true);
 
-    const res = await fetch(`${TELEMEDICINE_URL}/login`, {
+    const res = await fetch(`${API_URL}/user/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -601,13 +603,13 @@ export const AuthProvider = ({ children }) => {
 
     const data = await res.json();
 
-    console.log(data);
-
     if (res.ok) {
       setApproved(true);
       setMessage(data.message);
 
       setUser(data.user);
+
+      // navigate("/plans");
 
       setTimeout(() => {
         setApproved(false);
@@ -653,21 +655,33 @@ export const AuthProvider = ({ children }) => {
 
     const data = await res.json();
 
-    console.log(data);
-
     if (res.ok) {
       setApproved(true);
       setMessage(data.message);
 
       setUser(data.user);
 
+      console.log(data);
+
+      console.log(data.access_token);
+
       setToken(data.access_token);
+
+      const decoded = jwt(data.access_token);
+
+      console.log(decoded);
+
+      cookies.set("jwt_authorization", data.access_token, {
+        expires: new Date(decoded.exp * 1000),
+      });
 
       setTimeout(() => {
         setApproved(false);
       }, 4000);
 
-      setIsPlan(true);
+      setUser(data.user);
+
+      // setIsPlan(true);
       setIsLogin(false);
     } else {
       if (data.username) {
@@ -718,18 +732,45 @@ export const AuthProvider = ({ children }) => {
 
     const data = await res.json();
 
-    console.log(data.access_token);
-
     if (res.ok) {
+      setUser(data.user);
       setToken(data.access_token);
       setIsEmail(false);
       setIsLogin(false);
       setIsPlan(true);
     }
 
-    console.log(token);
-
     setLoading(false);
+  };
+
+  const checkUserLoggedIn = async () => {
+    const cookies = new Cookies();
+
+    setToken(cookies.get("jwt_authorization"));
+
+    const res = await fetch(`${API_URL}/user/detail`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.get("jwt_authorization")}`,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization",
+      },
+    });
+
+    const data = await res.json();
+
+    setUser(data.detail);
+  };
+
+  const logout = () => {
+    const cookies = new Cookies();
+
+    cookies.remove("jwt_authorization");
+
+    return <Navigate to="/activate/vsm/register" />;
   };
 
   return (
@@ -820,6 +861,7 @@ export const AuthProvider = ({ children }) => {
         firstname,
         setFirstname,
         setToken,
+        logout,
       }}
     >
       {children}

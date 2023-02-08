@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthContext from "../Context/AuthContext";
 import logo from "../imgs/logo.png";
 import { useLocation } from "react-router-dom";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const { logout, user } = useContext(AuthContext);
 
   const location = useLocation();
 
@@ -82,6 +85,16 @@ const Nav = () => {
               Terms & Conditions
             </a>
           </li>
+          {user && (
+            <li className=" mt-[10rem]  ">
+              <button
+                className=" text-[16px] hover:border-b-2 hover:border-b-primary pb-3 transition-all duration-75 ease-in-out text-primary font-bold"
+                onClick={logout}
+              >
+                Logout
+              </button>
+            </li>
+          )}
         </ul>
       </div>
     </div>

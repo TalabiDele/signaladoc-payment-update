@@ -28,8 +28,6 @@ const Checkout = () => {
     }
   }, [isPaid, ref, discountId]);
 
-  console.log(user);
-
   const config = {
     public_key: RAVE_KEY,
     tx_ref: Date.now(),

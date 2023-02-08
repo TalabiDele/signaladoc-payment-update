@@ -26,7 +26,7 @@ const Hero = () => {
           <h1 className=" text-5xl font-bold mb-4 ss:text-4xl">
             Monitor Your Vital Signs Just By Looking At Your Phone!
           </h1>
-          <Link to="/vsm">
+          <Link to="/activate/vsm">
             <button className=" bg-input-blue p-5 rounded-lg text-primary font-bold mt-5">
               Activate VSM
             </button>
