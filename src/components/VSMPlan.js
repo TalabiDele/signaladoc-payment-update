@@ -62,9 +62,9 @@ const VSMPlan = () => {
   };
 
   return (
-    <div className="flex fixed right-0 left-0 -z-10 xs:flex-col ss:flex-col">
+    <div className="flex fixed right-0 left-0 -z-10 xs:flex-col ss:flex-col xs:h-[90vh] ss:h-[100vh] overflow-y-scroll mt-[3rem] pb-[4rem]">
       <VSMSide />
-      <div className=" mt-5 w-[70%] mx-auto ss:my-[5rem] xs:my-[5rem]">
+      <div className=" mt-5 w-[70%] mx-auto ss:my-[5rem] xs:my-[5rem] ss:w-[100%] xs:w-[100%]">
         {loading && !plans && (
           <div className=" w-[20rem] h-[100vh] mx-auto grid justify-items-center items-center">
             <button
