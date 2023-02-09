@@ -43,9 +43,9 @@ const VSMCheckout = () => {
   const handleFlutterPayment = useFlutterwave(config);
 
   return (
-    <div className=" w-[60%] mx-auto">
+    <div className=" w-[60%] mx-auto xs:w-[80%] ss:w-[80%]">
       {selected && (
-        <div className=" bg-white mt-10 shadow-lg w-[30rem] p-10 rounded-md text-xl xs:w-[25rem] ss:w-[20rem] xs:mt-[5rem] ss:mt-[5rem] mx-auto">
+        <div className=" bg-white shadow-lg w-[30rem] p-10 rounded-md text-xl xs:w-[100%] ss:w-[100%] xs:mt-[5rem] ss:mt-[10rem] mx-auto">
           <p className=" text-2xl mb-5">Order Summary</p>
           <p className=" mb-3">
             Date: {moment(Date.now()).format("MMMM Do YYYY")}

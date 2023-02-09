@@ -171,13 +171,13 @@ const VSMLogin = () => {
 
             <div className=" flex justify-between">
               <p
-                className=" cursor-pointer font-bold mb-4 hover:text-primary"
+                className=" xs:text-sm ss:text-sm cursor-pointer font-bold mb-4 hover:text-primary"
                 onClick={handleForgot}
               >
                 Forgot Password?
               </p>
 
-              <p className="mb-10 text-right">
+              <p className="mb-10 text-right xs:text-sm ss:text-sm">
                 Don't have an account?{" "}
                 <Link to="/activate/vsm/register">
                   <span

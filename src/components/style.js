@@ -52,11 +52,13 @@ export const VsmBg = styled.div`
   @media (min-width: 480px) and (max-width: 767px) {
     height: 70vh;
     width: 100%;
+    display: none;
   }
 
   @media (min-width: 320px) and (max-width: 479px) {
     height: 70vh;
     width: 100%;
+    display: none;
   }
 `;
 

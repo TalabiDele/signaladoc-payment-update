@@ -16,9 +16,7 @@ const VSMSide = () => {
         </div>
       </VsmBg>
       <button
-        className={`${
-          !showBg ? "hidden" : ""
-        } bg-gradient-to-b from-grad-light to-grad-dark text-[20px] text-white w-2/4 py-4 rounded-md mt-5 mx-auto hidden xs:block ss:block`}
+        className={`ss:hidden xs:hidden bg-gradient-to-b from-grad-light to-grad-dark text-[20px] text-white w-2/4 py-4 rounded-md mt-5 mx-auto hidden `}
         onClick={() => setShowBg(false)}
       >
         Get Started

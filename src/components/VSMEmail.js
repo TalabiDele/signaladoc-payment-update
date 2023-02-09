@@ -117,14 +117,14 @@ const VSMEmail = () => {
         } w-2/4 h-[100vh] overflow-y-scroll xs:w-full ss:w-full ss:h-[90vh] xs:h-[90vh] sm:h-[90vh]`}
       >
         <div className=" relative top-[3rem] left-20 right-0 w-[80%] sm:left-10 xs:w-[80%] xs:left-0 xs:top-[2rem] xs:mx-auto ss:w-[80%] ss:left-0 ss:mx-auto ss:top-[3rem] sm:top-[1rem]">
-          {isEmail && (
+          {/* {isEmail && (
             <div className=" xs:hidden ss:hidden">
               <h1 className="font-bold text-5xl mb-10 lg:text-3xl sm:text-3xl sm:mb-5 ">
                 <span className=" text-primary">Monitor Your Vital Signs</span>{" "}
                 Just By Looking At Your Phone!
               </h1>
             </div>
-          )}
+          )} */}
 
           {/* <Steps /> */}
 
