@@ -32,7 +32,7 @@ function App() {
               !user ? (
                 <VSM />
               ) : (
-                <Navigate to="/activate/vsm/plans" replace={true} />
+                <Navigate to="/activate/vsm/checkout" replace={true} />
               )
             }
           />
@@ -43,7 +43,7 @@ function App() {
               !user ? (
                 <VsmLogin />
               ) : (
-                <Navigate to="/activate/vsm/plans" replace={true} />
+                <Navigate to="/activate/vsm/checkout" replace={true} />
               )
             }
           />
@@ -53,11 +53,7 @@ function App() {
             path="/activate/vsm/checkout"
             element={
               user ? (
-                selected ? (
-                  <Checkout />
-                ) : (
-                  <Navigate to="/activate/vsm/plans" replace={true} />
-                )
+                selected && <Checkout />
               ) : (
                 <Navigate to="/activate/vsm/register" replace={true} />
               )

@@ -323,11 +323,11 @@ const VSMEmail = () => {
 
           {isCode && <VSMCode />}
 
-          {isDetails && <VSMRegister />}
+          {/* {isDetails && <VSMRegister />} */}
 
           {userExists && <VSMUser />}
 
-          {isPlan && <VSMPlan />}
+          {/* {isPlan && <VSMPlan />} */}
 
           {isCheckout && <VSMCheckout />}
 

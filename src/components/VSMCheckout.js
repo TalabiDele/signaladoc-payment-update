@@ -21,6 +21,8 @@ const VSMCheckout = () => {
     setSelected,
   } = useContext(AuthContext);
 
+  console.log(selected);
+
   const config = {
     public_key: RAVE_KEY,
     tx_ref: Date.now(),
@@ -42,7 +44,7 @@ const VSMCheckout = () => {
 
   return (
     <div className=" w-[60%] mx-auto">
-      {plans && (
+      {selected && (
         <div className=" bg-white mt-10 shadow-lg w-[30rem] p-10 rounded-md text-xl xs:w-[25rem] ss:w-[20rem] xs:mt-[5rem] ss:mt-[5rem] mx-auto">
           <p className=" text-2xl mb-5">Order Summary</p>
           <p className=" mb-3">
@@ -66,6 +68,7 @@ const VSMCheckout = () => {
                     setIsPaid(true);
                     setIsSuccess(true);
                     setIsCheckout(false);
+                    setSelected(null);
                   } else {
                     setIsPaid(false);
                   }

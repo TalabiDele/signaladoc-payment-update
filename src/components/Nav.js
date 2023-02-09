@@ -1,12 +1,14 @@
 import React, { useState, useContext } from "react";
 import AuthContext from "../Context/AuthContext";
 import logo from "../imgs/logo.png";
-import { useLocation } from "react-router-dom";
+import { useLocation, Navigate, Link, useNavigate } from "react-router-dom";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { logout, user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const { logout, user, isLoggedOut } = useContext(AuthContext);
 
   const location = useLocation();
 
@@ -14,8 +16,16 @@ const Nav = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate("/activate/vsm/login");
+
+    setIsOpen(false);
+  };
+
   return (
     <div className="">
+      {isLoggedOut && <Navigate to="/activate/vsm/register" />}
       <div className=" xs:bg-primary ss:bg-primary h-20 left-0 right-0 fixed bg-none z-[100]">
         <div className="flex justify-between items-center mx-auto w-[95%] fixed left-0 right-0 top-5 z-[60]">
           <img src={logo} alt="" />
@@ -87,12 +97,14 @@ const Nav = () => {
           </li>
           {user && (
             <li className=" mt-[10rem]  ">
+              {/* <Link to="/activate/vsm/register"> */}
               <button
                 className=" text-[16px] hover:border-b-2 hover:border-b-primary pb-3 transition-all duration-75 ease-in-out text-primary font-bold"
-                onClick={logout}
+                onClick={() => handleLogout()}
               >
                 Logout
               </button>
+              {/* </Link> */}
             </li>
           )}
         </ul>

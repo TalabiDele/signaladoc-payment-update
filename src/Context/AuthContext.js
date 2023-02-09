@@ -4,6 +4,8 @@ import { API_URL, AUTH_API, TELEMEDICINE_URL } from "../Config";
 import jwt from "jwt-decode";
 import Cookies from "universal-cookie";
 import { Navigate } from "react-router-dom";
+import cookie from "cookie";
+import useLocalStorage from "../components/hooks/useLocalStorage";
 
 const AuthContext = createContext();
 
@@ -36,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   const [isCodeReset, setIsCodeReset] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useLocalStorage("plan", null);
   const [type, setType] = useState();
   const [isType, setIsType] = useState("");
   const [regType, setRegType] = useState();
@@ -44,12 +46,13 @@ export const AuthProvider = ({ children }) => {
   const [surname, setSurname] = useState("");
   const [photo, setPhoto] = useState("");
   const [email, setEmail] = useState("");
+  const [isLoggedOut, setIsLoggedOut] = useState(false);
 
   const cookies = new Cookies();
 
   useEffect(() => {
     checkUserLoggedIn();
-  }, [user]);
+  }, []);
 
   // const navigate = Navigate();
 
@@ -217,6 +220,14 @@ export const AuthProvider = ({ children }) => {
 
     if (res.ok) {
       // setUser(data.user);
+      cookie.serialize("jwt_authorization", data.access_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== "development",
+        maxAge: 60 * 60 * 24 * 1825,
+        sameSite: "strict",
+        path: "/",
+      });
+
       setToken(data.access_token);
       setApproved(true);
       setMessage("Account created successfully!");
@@ -225,6 +236,7 @@ export const AuthProvider = ({ children }) => {
       setIsDetails(false);
       setUser(data.user);
       setStepTwo(true);
+      setIsLoggedOut(false);
       setTimeout(() => {
         setApproved(false);
         setMessage("");
@@ -609,6 +621,8 @@ export const AuthProvider = ({ children }) => {
 
       setUser(data.user);
 
+      setIsLoggedOut(false);
+
       // navigate("/plans");
 
       setTimeout(() => {
@@ -661,18 +675,16 @@ export const AuthProvider = ({ children }) => {
 
       setUser(data.user);
 
-      console.log(data);
-
-      console.log(data.access_token);
+      setIsLoggedOut(false);
 
       setToken(data.access_token);
 
-      const decoded = jwt(data.access_token);
-
-      console.log(decoded);
-
-      cookies.set("jwt_authorization", data.access_token, {
-        expires: new Date(decoded.exp * 1000),
+      cookie.serialize("jwt_authorization", data.access_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== "development",
+        maxAge: 60 * 60 * 24 * 1825,
+        sameSite: "strict",
+        path: "/",
       });
 
       setTimeout(() => {
@@ -684,16 +696,23 @@ export const AuthProvider = ({ children }) => {
       // setIsPlan(true);
       setIsLogin(false);
     } else {
-      if (data.username) {
+      if (data.username && data.password) {
         setError(true);
-        setMessage("Username field is required!");
+        setMessage("The ssername & password fields are required!");
 
         setTimeout(() => {
           setError(false);
         }, 4000);
       } else if (data.password) {
         setError(true);
-        setMessage("Password field is required");
+        setMessage(data.password[0]);
+
+        setTimeout(() => {
+          setError(false);
+        }, 4000);
+      } else if (data.username) {
+        setError(true);
+        setMessage(data.username[0]);
 
         setTimeout(() => {
           setError(false);
@@ -735,17 +754,26 @@ export const AuthProvider = ({ children }) => {
     if (res.ok) {
       setUser(data.user);
       setToken(data.access_token);
+
+      cookie.serialize("jwt_authorization", data.access_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== "development",
+        maxAge: 60 * 60 * 24 * 1825,
+        sameSite: "strict",
+        path: "/",
+      });
+
       setIsEmail(false);
       setIsLogin(false);
       setIsPlan(true);
     }
 
     setLoading(false);
+
+    return <Navigate to="/activate/vsm/checkout" replace={true} />;
   };
 
   const checkUserLoggedIn = async () => {
-    const cookies = new Cookies();
-
     setToken(cookies.get("jwt_authorization"));
 
     const res = await fetch(`${API_URL}/user/detail`, {
@@ -766,11 +794,23 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    const cookies = new Cookies();
+    setUser(null);
+    // cookies.remove("jwt_authorization", "", {
+    //   expires: new Date(0),
+    // });
 
-    cookies.remove("jwt_authorization");
+    cookie.serialize("jwt_authorization", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== "development",
+      expires: new Date(0),
+      sameSite: "strict",
+      path: "/",
+    });
 
-    return <Navigate to="/activate/vsm/register" />;
+    setIsLoggedOut(true);
+    setUser(null);
+
+    return <Navigate to="/activate/vsm/register" replace={true} />;
   };
 
   return (
